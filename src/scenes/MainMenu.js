@@ -1,7 +1,7 @@
 import { Scene } from 'phaser';
 import { Textos } from '../components/textos.js';
 import { play_sonidos } from '../functions/functions.js';
-// import { BotonNuevaPartida } from '../components/boton-nuevapartida.js';
+import { BotonNuevaPartida } from '../components/boton-nuevapartida.js';
 
 export class MainMenu extends Scene
 {
@@ -12,7 +12,7 @@ export class MainMenu extends Scene
 
     init()
     {
-        // this.botoninicio = new BotonNuevaPartida(this);
+        this.botoninicio = new BotonNuevaPartida(this);
 
         this.txt = new Textos(this, {
             x: Math.floor(this.sys.game.config.width / 2),
@@ -52,7 +52,7 @@ export class MainMenu extends Scene
             {
                 at: aparecerBoton,
                 run: () => {
-                    // this.botoninicio.create('Game', false);
+                    this.botoninicio.create('Game', false);
                 }
             }
         ]).play();

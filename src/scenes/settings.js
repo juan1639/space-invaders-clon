@@ -8,85 +8,31 @@ export class Settings
 
     static screen = {
         width: 800,
-        height: 600,
-        numberWidths: 4,
-        numberHeights: 1
+        height: 600
     };
 
-    static animaInicial = true;
+    static nivelSuperado = false;
     static gameOver = false;
 
     static puntos = 0;
-    static incPuntos = 0;
-    static hi = 238;
-
-    static aplausos = {
-        abucheos: 200,
-        aplausos: 400
-    };
-
-    static pausas = {
-        flechaClavada: 2800,
-        showTxtInicial: 15000
-    };
-
-    static jugador = {
-        offSetX: 10,
-        offSetY: 95
-    };
-
-    static flecha = {
-        nroFlechas: 10,
-        lanzamientoNro: 0,
-        changeCam: false,
-        iniX: -200,
-        iniY: 350,
-        offSetX: 12,
-        offSetY: 80
-    };
-
-    static diana = {
-        nroElementos: 16,
-        x: Settings.screen.width * (Settings.screen.numberWidths - 2),
-        y: 420,
-        ancho: 2,
-        alto: 200,
-        scaleX: 1,
-        scaleY: 1
-    };
-
-    static barraFuerza = {
-        x: 0,
-        y: 60,
-        ancho: 400,
-        alto: 30,
-        padding: 7
-    };
+    static nivel = 1;
+    static hi = 3000;
 
     static depth = {
-        fondoScroll: 0,
-        tileSuelo: 45,
-        jugador: 20,
-        arco: 30,
-        flecha: 35,
-        diana: 40,
-        marcadores: 50,
-        textos: 60
+        fondo: 0,
+        disparoEnemigo: 10,
+        disparo: 20,
+        jugador: 40,
+        enemigo: 50,
+        explosiones: 60,
+        marcadores: 110,
+        textos: 120
     };
 
-    static cameraScores = {
-        x: 0,
-        y: 0,
-        ancho: 800,
-        alto: 45,
-        scrollX: 0,
-        scrollY: -50
-    };
-
-    // -----------------------------------------------
-    static isAnimaInicial()
+    // --- Getters ---
+    static isNivelSuperado()
     {
-        return Settings.animaInicial;
+        return Settings.nivelSuperado;
     }
 
     static isGameOver()
@@ -94,19 +40,14 @@ export class Settings
         return Settings.gameOver;
     }
 
-    static getScreen()
-    {
-        return Settings.screen;
-    }
-
     static getPuntos()
     {
         return Settings.puntos;
     }
 
-    static getIncPuntos()
+    static getNivel()
     {
-        return Settings.incPuntos;
+        return Settings.nivel;
     }
 
     static getRecord()
@@ -114,27 +55,12 @@ export class Settings
         return Settings.hi;
     }
 
-    static getAplausos()
+    // --- Setters ---
+    static setNivelSuperado(bool)
     {
-        return Settings.aplausos;
+        Settings.nivelSuperado = bool;
     }
-
-    static getCameraScores()
-    {
-        return Settings.cameraScores;
-    }
-
-    static getFlechaNro()
-    {
-        return Settings.flecha.lanzamientoNro;
-    }
-
-    // -----------------------------------------------
-    static setAnimaInicial(bool)
-    {
-        Settings.animaInicial = bool;
-    }
-
+    
     static setGameOver(bool)
     {
         Settings.gameOver = bool;
@@ -145,28 +71,13 @@ export class Settings
         Settings.puntos = ptos;
     }
 
-    static setIncPuntos(incPtos)
+    static setNivel(level)
     {
-        Settings.incPuntos = incPtos;
+        Settings.nivel = level;
     }
 
     static setRecord(hiScore)
     {
         Settings.hi = hiScore;
-    }
-
-    static setCameraScores(x, y, ancho, alto, scrollX, scrollY)
-    {
-        Settings.cameraScores.x = x;
-        Settings.cameraScores.y = y;
-        Settings.cameraScores.ancho = ancho;
-        Settings.cameraScores.alto = alto;
-        Settings.cameraScores.scrollX = scrollX;
-        Settings.cameraScores.scrollY = scrollY;
-    }
-
-    static setFlechaNro(reset)
-    {
-        Settings.flecha.lanzamientoNro = reset;
     }
 }
