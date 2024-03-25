@@ -58,6 +58,10 @@ export class Preloader extends Scene
         this.load.spritesheet('boton-fullscreen', './img/boton-fullscreen.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('radio-buttons', './img/radio-buttons-ssheet.png', {frameWidth: 50, frameHeight: 50});
 
+        this.load.image('boton-fire-joystick', './img/boton-fire-joystick.png');
+        this.load.image('cruceta-left', './img/left.png');
+        this.load.image('cruceta-right', './img/right.png');
+
         this.load.image('explosion', './img/boom.png');
         this.load.image('disparo-ene', './img/bullet.png');
         this.load.image('disparo', './img/bullet2.png');

@@ -7,8 +7,9 @@
 import { Scene } from 'phaser';
 import { Settings } from './settings.js';
 
-import { 
-  play_sonidos
+import {
+    inicia_disparo,
+    play_sonidos
 } from '../functions/functions.js';
 
 import { Jugador, JugadorShowVidas } from '../components/jugador.js';
@@ -37,8 +38,9 @@ export class Game extends Scene
         this.disparo = new Disparo(this);
 
         this.enemigo = new Enemigo(this, {
-            left: 0,
-            vx: 0,
+            left: 96,
+            top: 64,
+            vx: 1,
             vy: 1,
             each: 20,
             numberAliensHor: 10,
@@ -75,9 +77,9 @@ export class Game extends Scene
         this.set_sonidos();
 
         this.botonfullscreen.create();
-        // this.botonfire.create();
-        // this.crucetaleft.create();
-        // this.crucetaright.create();
+        this.botonfire.create();
+        this.crucetaleft.create();
+        this.crucetaright.create();
         // this.hideMobileControls();
 
         /* this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
@@ -92,7 +94,7 @@ export class Game extends Scene
         
         this.jugadorSV.create();
         this.jugador.create();
-        // this.disparo.create();
+        this.disparo.create();
         this.enemigo.create();
         // this.disparoenemigo.create();
         // this.explosion.create();
@@ -105,7 +107,15 @@ export class Game extends Scene
     update()
     {
         this.jugador.update();
+        this.disparo.update();
         this.enemigo.update();
+
+        if (this.jugador.get().active && this.jugador.get().visible)
+        {
+            inicia_disparo(this.jugador, this.scene, this.botonfire, this.time, this.disparo, this.sonidoDisparo);
+        }
+        
+        // inicia_disparo_enemigos(this);
     }
 
     set_sonidos()

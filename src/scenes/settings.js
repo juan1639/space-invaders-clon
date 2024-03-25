@@ -26,7 +26,25 @@ export class Settings
         velX: 520,
         acelX: 500,
         velY: 0
+    };
+
+    static disparo =
+    {
+        NRO_MAX_DISPAROS: 2,
+        VelY: -500
     }
+
+    static incGodownInvaders =
+    [
+        2, 2, 4, 5, 8, 10, 12, 15, 18, 20, 22, 25, 28, 30, 30, 30, 30, 30, 30, 30, 30
+    ];
+
+    static coloresInvaders =
+    {
+        rojo: 0xff2211,
+        verde: 0x11ff11,
+        amarillo: 0xeeff00
+    };
 
     static pausas =
     {
@@ -34,7 +52,7 @@ export class Settings
         duracionExplosion: {
             jugador: 1150
         }
-    }
+    };
 
     static depth = {
         fondo: 0,
@@ -44,7 +62,8 @@ export class Settings
         enemigo: 50,
         explosiones: 60,
         marcadores: 110,
-        textos: 120
+        textos: 120,
+        mobileControls: 150
     };
 
     // --- Getters ---
@@ -76,6 +95,11 @@ export class Settings
     static getVidas()
     {
         return Settings.vidas;
+    }
+
+    static getIncGodownInvaders()
+    {
+        return Settings.incGodownInvaders;
     }
 
     // --- Setters ---

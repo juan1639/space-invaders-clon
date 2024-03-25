@@ -11,7 +11,7 @@ export class Enemigo
     create()
     {
         const {
-            left, vx, vy,
+            left, top, vx, vy,
             each,
             numberAliensHor, numberAliensVer,
             gapX, gapY,
@@ -22,9 +22,11 @@ export class Enemigo
         this.formacion =
         {
             x: left,
+            y: top,
             velX: vx,
             velY: vy,
-            totalAliens: numberAliensHor * numberAliensVer
+            totalAliens: numberAliensHor * numberAliensVer,
+            width: numberAliensHor * gapX - gapX
         }
 
         this.enemigos = this.relatedScene.physics.add.group(
@@ -78,8 +80,14 @@ export class Enemigo
     {
         this.formacion.x += this.formacion.velX;
 
-        if ((this.formacion.x >= this.formacion.recorrido && this.formacion.velX > 0) || (this.formacion.x <= -this.formacion.recorrido / 2 && this.formacion.velX < 0)) {
+        if (
+            (this.formacion.x + this.formacion.width >= this.relatedScene.sys.game.config.width && this.formacion.velX > 0) ||
+            (this.formacion.x <= 0 / 2 && this.formacion.velX < 0))
+        {
             this.formacion.velX = -this.formacion.velX;
+
+            const velGodown = this.formacion.velY * Settings.getIncGodownInvaders()[Settings.getNivel()];
+            Phaser.Actions.IncY(this.enemigos.getChildren(), velGodown);
         }
 
         Phaser.Actions.IncX(this.enemigos.getChildren(), this.formacion.velX);
@@ -109,14 +117,17 @@ export class Enemigo
             if (index < Math.floor(this.formacion.totalAliens / keysAnima.length))
             {
                 ene.play('enemys-anim');
+                ene.setTint(Settings.coloresInvaders.rojo);
             }
             else if (index < Math.floor(this.formacion.totalAliens / keysAnima.length) * 2)
             {
                 ene.play('enemys2-anim');
+                ene.setTint(Settings.coloresInvaders.verde);
             }
             else if (index < Math.floor(this.formacion.totalAliens / keysAnima.length) * 3)
             {
                 ene.play('enemys3-anim');
+                ene.setTint(Settings.coloresInvaders.amarillo);
             }
         });
     }

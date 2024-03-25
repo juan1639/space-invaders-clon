@@ -1,3 +1,4 @@
+import { Settings } from "../scenes/settings.js";
 
 export class BotonFire
 {
@@ -12,7 +13,7 @@ export class BotonFire
         const alto = this.relatedScene.sys.game.config.height;
 
         this.boton = this.relatedScene.add.image(ancho - 100, alto - 90, 'boton-fire-joystick').setInteractive();
-        this.boton.setScale(2.3);
+        this.boton.setScale(2).setDepth(Settings.depth.mobileControls);
         this.isDown = false;
     
         this.boton.on('pointerover', () => {
@@ -52,7 +53,7 @@ export class CrucetaDireccion
         const alto = this.relatedScene.sys.game.config.height;
         
         this.boton = this.relatedScene.add.image(this.direccion.x, alto - this.direccion.y, this.direccion.id).setInteractive();
-        this.boton.setScale(2.7, 2.3);
+        this.boton.setScale(2.7, 2.3).setDepth(Settings.depth.mobileControls);
         this.isDown = false;
     
         this.boton.on('pointerover', () => {
