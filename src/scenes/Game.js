@@ -8,6 +8,8 @@ import { Scene } from 'phaser';
 import { Settings } from './settings.js';
 
 import {
+    colisionJugadorVsEnemigo,
+    excepcionJugadorVsEnemigo,
     inicia_disparo,
     play_sonidos
 } from '../functions/functions.js';
@@ -80,7 +82,7 @@ export class Game extends Scene
         this.botonfire.create();
         this.crucetaleft.create();
         this.crucetaright.create();
-        // this.hideMobileControls();
+        this.hideMobileControls();
 
         /* this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
         x: 90,
@@ -116,6 +118,8 @@ export class Game extends Scene
         }
         
         // inicia_disparo_enemigos(this);
+        
+        if (this.enemigo.get().countActive() <= 0) Settings.setNivelSuperado(true);
     }
 
     set_sonidos()
@@ -140,15 +144,17 @@ export class Game extends Scene
 
     set_colliders()
     {
-        /* this.physics.add.collider(this.enemigo.get(), this.disparo.get(), colisionVsEnemigo, null, this);
+        // this.physics.add.collider(this.enemigo.get(), this.disparo.get(), colisionVsEnemigo, null, this);
 
-        this.physics.add.overlap(this.enemigo.get(), this.jugador.get(), colisionJugadorVsEnemigo,(enemigo, jugador) => {
+        this.physics.add.overlap(this.enemigo.get(), this.jugador.get(), colisionJugadorVsEnemigo, excepcionJugadorVsEnemigo, this);
+
+        /* this.physics.add.overlap(this.enemigo.get(), this.jugador.get(), colisionJugadorVsEnemigo,(enemigo, jugador) => {
 
         if (enemigo.alpha < 1) return false;// Invisibilidad al revivir
         return true;
-        }, this);
+        }, this); */
 
-        this.physics.add.overlap(this.disparoenemigo.get(), this.jugador.get(), colisionVsDisparoEnemigo,(disparoenemigo, jugador) => {
+        /* this.physics.add.overlap(this.disparoenemigo.get(), this.jugador.get(), colisionVsDisparoEnemigo,(disparoenemigo, jugador) => {
 
         if (disparoenemigo.alpha < 1) return false;// Invisibilidad al revivir
         return true;

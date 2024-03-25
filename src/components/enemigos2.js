@@ -86,7 +86,7 @@ export class Enemigo
         {
             this.formacion.velX = -this.formacion.velX;
 
-            const velGodown = this.formacion.velY * Settings.getIncGodownInvaders()[Settings.getNivel()];
+            const velGodown = this.formacion.velY * Settings.getIncGodownInvaders()[Settings.getNivel()] * 40;
             Phaser.Actions.IncY(this.enemigos.getChildren(), velGodown);
         }
 

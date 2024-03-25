@@ -38,10 +38,7 @@ export class Disparo
     {
         this.disparo.children.iterate(disp =>
         {
-            if (disp.y < 0)
-            {
-                disp.setActive(false).setVisible(false).setX(-9999);
-            }
+            if (disp.y < 0) disp.setActive(false).setVisible(false).setX(-9999);
         });
     }
     

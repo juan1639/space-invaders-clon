@@ -49,8 +49,10 @@ export class Settings
     static pausas =
     {
         revivir: 4000,
+        invisible: 3000,
         duracionExplosion: {
-            jugador: 1150
+            jugador: 1150,
+            enemigo: 900
         }
     };
 

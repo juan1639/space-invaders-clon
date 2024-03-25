@@ -66,6 +66,7 @@ export class Preloader extends Scene
         this.load.image('disparo-ene', './img/bullet.png');
         this.load.image('disparo', './img/bullet2.png');
         this.load.image('explosion-obstaculo', './img/explode.png');
+        this.load.image('particula-tint', './img/particula-tint.png');
         this.load.image('nodriza', './img/mothership.png');
         this.load.image('jugador', './img/ship.png');
 
