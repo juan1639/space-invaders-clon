@@ -46,13 +46,15 @@ export class Settings
         amarillo: 0xeeff00
     };
 
+    static explosionInvaders = null;
+
     static pausas =
     {
         revivir: 4000,
         invisible: 3000,
         duracionExplosion: {
-            jugador: 1150,
-            enemigo: 900
+            jugador: 1000,
+            enemigo: 400
         }
     };
 

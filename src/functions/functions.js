@@ -35,11 +35,13 @@ function colisionJugadorVsEnemigo(enemigo, jugador)
   console.log('colision...jugador-enemigo');
   console.log(jugador);
 
+  draw_explosionTimeout(this, jugador);
+
   particulas(
     jugador.x, jugador.y, 'particula-tint',
-    {min: 60, max: 180},
-    {min: 2500, max: 3000},
-    {start: 0.9, end: 0},
+    {min: 120, max: 180},
+    {min: Settings.pausas.duracionExplosion.enemigo, max: Settings.pausas.duracionExplosion.enemigo + 300},
+    {start: 0.6, end: 0},
     // 0xffffff,
     // new Phaser.Display.Color(255, Phaser.Math.Between(50, 240), 0).color,
     jugador.tint,
@@ -49,7 +51,7 @@ function colisionJugadorVsEnemigo(enemigo, jugador)
   particulas(
     enemigo.x, enemigo.y, 'particula-tint',
     {min: 120, max: 200},
-    {min: 2500, max: 3000},
+    {min: 1500, max: 2000},
     {start: 0.8, end: 0},
     // 0xffffff,
     new Phaser.Display.Color(Phaser.Math.Between(0, 125), Phaser.Math.Between(125, 255), 0).color,
@@ -88,6 +90,31 @@ function excepcionJugadorVsEnemigo(enemigo, jugador)
   return true;
 }
 
+function colisionDisparoVsEnemigo(disparo, enemigo)
+{
+  console.log('colision...disparo-enemigo');
+  console.log(disparo);
+
+  draw_explosionTimeout(this, disparo);
+
+  particulas(
+    disparo.x, disparo.y, 'particula-tint',
+    {min: 120, max: 180},
+    {min: Settings.pausas.duracionExplosion.enemigo, max: Settings.pausas.duracionExplosion.enemigo + 500},
+    {start: 0.7, end: 0},
+    // 0xffffff,
+    // new Phaser.Display.Color(255, Phaser.Math.Between(50, 240), 0).color,
+    disparo.tint,
+    null, false, this
+  );
+
+  suma_puntos(disparo);
+  // this.marcador.update(0, Settings.getPuntos());
+  
+  enemigo.setActive(false).setVisible(false).setX(-9999)
+  disparo.setActive(false).setVisible(false).disableBody(true, true);
+}
+
 function particulas(x, y, particula, vel, span, size, color, sprite, bool, scene)
 {
     const partis = scene.add.particles(x, y, particula, {
@@ -105,6 +132,19 @@ function particulas(x, y, particula, vel, span, size, color, sprite, bool, scene
     });
 
     if (bool) partis.startFollow(sprite);
+}
+
+function draw_explosionTimeout(scene, enemigo)
+{
+  Settings.explosionInvaders = scene.add.image(enemigo.x, enemigo.y, 'explosion');
+  Settings.explosionInvaders.setTint(enemigo.tint).setScale(2).setAlpha(1);
+  
+  scene.tweens.add(
+  {
+    targets: Settings.explosionInvaders,
+    alpha: 0,
+    duration: Settings.pausas.duracionExplosion.enemigo - 100
+  });
 }
 
 function suma_puntos(puntos)
@@ -130,6 +170,7 @@ function play_sonidos(id, loop, volumen)
 export {
   colisionJugadorVsEnemigo,
   excepcionJugadorVsEnemigo,
+  colisionDisparoVsEnemigo,
   inicia_disparo,
   play_sonidos
 };

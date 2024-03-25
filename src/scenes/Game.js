@@ -10,6 +10,7 @@ import { Settings } from './settings.js';
 import {
     colisionJugadorVsEnemigo,
     excepcionJugadorVsEnemigo,
+    colisionDisparoVsEnemigo,
     inicia_disparo,
     play_sonidos
 } from '../functions/functions.js';
@@ -144,8 +145,10 @@ export class Game extends Scene
 
     set_colliders()
     {
-        // this.physics.add.collider(this.enemigo.get(), this.disparo.get(), colisionVsEnemigo, null, this);
+        // Collider enemigo vs disparo
+        this.physics.add.collider(this.enemigo.get(), this.disparo.get(), colisionDisparoVsEnemigo, null, this);
 
+        // Collider enemigo vs jugador
         this.physics.add.overlap(this.enemigo.get(), this.jugador.get(), colisionJugadorVsEnemigo, excepcionJugadorVsEnemigo, this);
 
         /* this.physics.add.overlap(this.enemigo.get(), this.jugador.get(), colisionJugadorVsEnemigo,(enemigo, jugador) => {
