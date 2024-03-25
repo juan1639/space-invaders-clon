@@ -65,9 +65,13 @@ export class Preloader extends Scene
         this.load.image('nodriza', './img/mothership.png');
         this.load.image('jugador', './img/ship.png');
 
+        const widthInvader = [null, 16, 22, 24];
+
         for (let i = 1; i < 4; i ++)
         {
-            this.load.spritesheet(`invader${i}`, `./img/invader${i}.png`, {frameWidth: 16, frameHeight: 16});
+            this.load.spritesheet(`invader${i}`, `./img/invader${i}.png`, {
+                frameWidth: widthInvader[i], frameHeight: 16
+            });
         }
 
         //  Archivos de audio

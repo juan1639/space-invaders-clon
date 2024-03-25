@@ -17,6 +17,24 @@ export class Settings
     static puntos = 0;
     static nivel = 1;
     static hi = 3000;
+    static vidas = 3;
+
+    static jugador =
+    {
+        posIniX: Math.floor(Settings.screen.width / 2),
+        posIniY: Math.floor(Settings.screen.height / 1.08),
+        velX: 520,
+        acelX: 500,
+        velY: 0
+    }
+
+    static pausas =
+    {
+        revivir: 4000,
+        duracionExplosion: {
+            jugador: 1150
+        }
+    }
 
     static depth = {
         fondo: 0,
@@ -55,12 +73,17 @@ export class Settings
         return Settings.hi;
     }
 
+    static getVidas()
+    {
+        return Settings.vidas;
+    }
+
     // --- Setters ---
     static setNivelSuperado(bool)
     {
         Settings.nivelSuperado = bool;
     }
-    
+
     static setGameOver(bool)
     {
         Settings.gameOver = bool;
@@ -79,5 +102,10 @@ export class Settings
     static setRecord(hiScore)
     {
         Settings.hi = hiScore;
+    }
+
+    static setVidas(lifes)
+    {
+        Settings.vidas = lifes;
     }
 }

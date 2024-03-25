@@ -1,50 +1,63 @@
 import { Settings } from '../scenes/settings.js';
-// import { centrar_txt } from '../functions/functions.js';
 
 export class Enemigo
 {
-    static tileXY = [64, 64];
-    static VEL_Y = 120;
-
-    constructor(scene)
+    constructor(scene, args)
     {
         this.relatedScene = scene;
+        this.args = args;
     }
 
     create()
     {
-        this.formacion = this.formaciones_nivel(Settings.getNivel());
-        console.log(Settings.getNivel());
+        const {
+            left, vx, vy,
+            each,
+            numberAliensHor, numberAliensVer,
+            gapX, gapY,
+            marginLeft, marginTop
 
-        this.enemigos = this.relatedScene.physics.add.group({
-            key: ['enemigos', 'enemigos2'],
-            frameQuantity: this.formacion.EnemigoDeCadaTipo[0],
+        } = this.args;
+
+        this.formacion =
+        {
+            x: left,
+            velX: vx,
+            velY: vy,
+            totalAliens: numberAliensHor * numberAliensVer
+        }
+
+        this.enemigos = this.relatedScene.physics.add.group(
+        {
+            key: ['invader1', 'invader2', 'invader3'],
+            frameQuantity: each,
             gridAlign: { 
-                width: 12, 
-                height: this.formacion.columnas, 
-                cellWidth: Enemigo.tileXY[0], 
-                cellHeight: Enemigo.tileXY[1], 
-                x: this.formacion.marginLeft,  
-                y: this.formacion.marginTop
+                width: numberAliensHor, 
+                height: numberAliensVer, 
+                cellWidth: gapX, 
+                cellHeight: gapY, 
+                x: marginLeft,  
+                y: marginTop
             }
         });
 
-        this.enemigos.getChildren().forEach((ene, index) => {
-            this.inicializar(ene, index);
+        this.enemigos.getChildren().forEach((ene, index) =>
+        {
+            ene.setAngle(355).setScale(2).setDepth(Settings.depth.enemigo);
+            ene.setData('puntos', 400 - index * 5);
         });
 
         this.relatedScene.tweens.add({
             targets: this.enemigos.getChildren(),
-            angle: 10,
+            angle: 5,
             yoyo: true,
             duration: 1000,
             repeat: -1
         });
 
-        this.crea_enemigos_descendentes();
         this.crea_anims(Settings.getNivel());
 
-        const timeline = this.relatedScene.add.timeline([
+        /* const timeline = this.relatedScene.add.timeline([
             {
                 at: 30000,
                 run: () => {
@@ -56,7 +69,7 @@ export class Enemigo
             }
         ]);
 
-        timeline.play();
+        timeline.play(); */
 
         console.log(this.enemigos.getChildren());
     }
@@ -70,98 +83,42 @@ export class Enemigo
         }
 
         Phaser.Actions.IncX(this.enemigos.getChildren(), this.formacion.velX);
-
-        this.enemigos.children.iterate(ene => {
-
-            if (ene.y > this.relatedScene.sys.game.config.height) ene.setVelocityY(-Enemigo.VEL_Y);
-            if (ene.y < -200) ene.setVelocityY(Enemigo.VEL_Y);
-        });
-    }
-
-    inicializar(ene, index)
-    {
-        ene.setAngle(350);
-        ene.setScale(0.4);
-        ene.setDepth(2);
-        ene.setData('puntos', 100 + Phaser.Math.Between(0, 9) * 10);
-    }
-
-    crea_enemigos_descendentes()
-    {
-        let frecuencia = 7000 - Settings.getNivel() * 500;
-        if (frecuencia <= 2500) frecuencia = 2500;
-
-        let hastaAbajo = 100 - Settings.getNivel() * 10;
-        if (hastaAbajo <= 0) hastaAbajo = 0;
-
-        let descender = [];
-
-        if (Settings.getNivel() === 1) {
-
-            this.enemigos.children.iterate((ene, index) => {
-
-                if (index >= 24) descender.push(ene);
-            });
-
-        } else {
-
-            this.enemigos.children.iterate((ene, index) => {
-
-                descender.push(ene);
-            });
-        }
-
-        this.relatedScene.tweens.add({
-            targets: descender,
-            y: this.relatedScene.sys.game.config.height - hastaAbajo,
-            ease: 'sine.out',
-            duration: 1000,
-            yoyo: true,
-            delay: 5500,
-            repeat: -1,
-            repeatDelay: frecuencia
-        });
     }
 
     crea_anims(nivel)
     {
         const keysAnima = [
-            ['enemys-anim', 'enemigos'],
-            ['enemys2-anim', 'enemigos2']
+            ['enemys-anim', 'invader1'],
+            ['enemys2-anim', 'invader2'],
+            ['enemys3-anim', 'invader3']
         ];
 
-        keysAnima.forEach(anima => {
-
+        keysAnima.forEach(anima =>
+        {
             this.relatedScene.anims.create({
                 key: anima[0],
-                frames: this.relatedScene.anims.generateFrameNumbers(anima[1], { frames: [ 0, 1, 2] }),
-                frameRate: 5,
+                frames: this.relatedScene.anims.generateFrameNumbers(anima[1], {frames: [0, 1]}),
+                duration: 600,
+                yoyo: true,
                 repeat: -1
             });
         });
 
-        if (nivel === 1) {
-
-            this.enemigos.getChildren().forEach((ene, index) => {
-
-                if (index < 24) {
-                    ene.play('enemys-anim');
-                } else {
-                    ene.play('enemys2-anim');
-                }
-            });
-
-        } else {
-
-            this.enemigos.getChildren().forEach((ene, index) => {
-
-                if (index < 24) {
-                    ene.play('enemys-anim');
-                } else {
-                    ene.play('enemys2-anim');
-                }
-            });
-        }
+        this.enemigos.children.iterate((ene, index) =>
+        {
+            if (index < Math.floor(this.formacion.totalAliens / keysAnima.length))
+            {
+                ene.play('enemys-anim');
+            }
+            else if (index < Math.floor(this.formacion.totalAliens / keysAnima.length) * 2)
+            {
+                ene.play('enemys2-anim');
+            }
+            else if (index < Math.floor(this.formacion.totalAliens / keysAnima.length) * 3)
+            {
+                ene.play('enemys3-anim');
+            }
+        });
     }
 
     get_posicion(index)
@@ -170,69 +127,6 @@ export class Enemigo
         const x = index - (y * Enemigo.array_enemigos[0].length);
         
         return [x, y];
-    }
-
-    formaciones_nivel(nivel)
-    {
-        const formaciones = [
-            {
-                x: 0,// (Nivel 0 --> No hay)
-                velX: 1,
-                recorrido: 60,
-                // marginLeft: Math.floor(Enemigo.tileXY[0] / 2),
-                marginLeft: 0,
-                // marginTop: Math.floor(Enemigo.tileXY[1]),
-                marginTop: 0,
-                EnemigoDeCadaTipo: [24, 24],
-                columnas: 4
-            },
-            {
-                x: 0,// Nivel 1
-                velX: 1,
-                recorrido: 60,
-                // marginLeft: Math.floor(Enemigo.tileXY[0] / 2),
-                marginLeft: 0,
-                // marginTop: Math.floor(Enemigo.tileXY[1]),
-                marginTop: 0,
-                EnemigoDeCadaTipo: [24, 24],
-                columnas: 4
-            },
-            {
-                x: 0,// Nivel 2
-                velX: 2,
-                recorrido: 60,
-                // marginLeft: Math.floor(Enemigo.tileXY[0] / 2),
-                marginLeft: 0,
-                marginTop: -Enemigo.tileXY[1] * 2,
-                EnemigoDeCadaTipo: [36, 36],
-                columnas: 6
-
-            },
-            {
-                x: 0,// Nivel 3
-                velX: 2,
-                recorrido: 60,
-                // marginLeft: Math.floor(Enemigo.tileXY[0] / 2),
-                marginLeft: 0,
-                marginTop: -Enemigo.tileXY[1] * 4,
-                EnemigoDeCadaTipo: [48, 48],
-                columnas: 8
-            },
-            {
-                x: 0,// Nivel 4
-                velX: 2,
-                recorrido: 60,
-                // marginLeft: Math.floor(Enemigo.tileXY[0] / 2),
-                marginLeft: 0,
-                marginTop: -Enemigo.tileXY[1] * 4,
-                EnemigoDeCadaTipo: [48, 48],
-                columnas: 8
-            }
-        ];
-
-        if (nivel > 4) return formaciones[4];
-
-        return formaciones[nivel];
     }
 
     get()

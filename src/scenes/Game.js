@@ -35,12 +35,31 @@ export class Game extends Scene
         this.jugador = new Jugador(this);
         this.jugadorSV = new JugadorShowVidas(this);
         this.disparo = new Disparo(this);
-        this.enemigo = new Enemigo(this);
+
+        this.enemigo = new Enemigo(this, {
+            left: 0,
+            vx: 0,
+            vy: 1,
+            each: 20,
+            numberAliensHor: 10,
+            numberAliensVer: 6,
+            gapX: 64,
+            gapY: 48,
+            marginLeft: 96,
+            marginTop: 64
+        });
+
         this.disparoenemigo = new DisparoEnemigo(this);
         this.explosion = new Explosion(this);
         this.particulas = new Particulas(this);
         this.marcador = new Marcador(this);
-        this.botonfullscreen = new BotonFullScreen(this);
+
+        this.botonfullscreen = new BotonFullScreen(this, {
+            x: this.sys.game.config.width / 1.1, y: 0,
+            id: 'boton-fullscreen',
+            scX: 1, scY: 1, ang: 0
+        });
+
         this.botonfire = new BotonFire(this);
         this.crucetaleft = new CrucetaDireccion(this, { id: 'cruceta-left', x: 80, y: 60 });
         this.crucetaright = new CrucetaDireccion(this, { id: 'cruceta-right', x: 290, y: 60 });
@@ -56,10 +75,10 @@ export class Game extends Scene
         this.set_sonidos();
 
         this.botonfullscreen.create();
-        this.botonfire.create();
-        this.crucetaleft.create();
-        this.crucetaright.create();
-        this.hideMobileControls();
+        // this.botonfire.create();
+        // this.crucetaleft.create();
+        // this.crucetaright.create();
+        // this.hideMobileControls();
 
         /* this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
         x: 90,
@@ -73,19 +92,20 @@ export class Game extends Scene
         
         this.jugadorSV.create();
         this.jugador.create();
-        this.disparo.create();
+        // this.disparo.create();
         this.enemigo.create();
-        this.disparoenemigo.create();
-        this.explosion.create();
-        this.particulas.create();
-        this.marcador.create();
+        // this.disparoenemigo.create();
+        // this.explosion.create();
+        // this.particulas.create();
+        // this.marcador.create();
 
         this.set_colliders();
     }
 
     update()
     {
-
+        this.jugador.update();
+        this.enemigo.update();
     }
 
     set_sonidos()

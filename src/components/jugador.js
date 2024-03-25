@@ -2,12 +2,6 @@ import { Settings } from "../scenes/settings.js";
 
 export class Jugador
 {
-    static VEL_X = 520;
-    static ACEL_X = 500;
-    static VEL_Y = 0;
-    static REVIVIR_PAUSA = 4000;
-    static DURACION_EXPLO = 1150;
-
     constructor(scene)
     {
         this.relatedScene = scene;
@@ -15,17 +9,17 @@ export class Jugador
 
     create()
     {
-        const posIniX = Math.floor(this.relatedScene.sys.game.config.width / 2);
-        const posIniY = Math.floor(this.relatedScene.sys.game.config.height / 1.08);
+        this.jugador = this.relatedScene.physics.add.sprite(
+            Settings.jugador.posIniX, Settings.jugador.posIniY, 'jugador'
+        );
 
-        this.jugador = this.relatedScene.physics.add.sprite(posIniX, posIniY, 'jugador');
-        this.jugador.setScale(0.5, 0.5);
+        this.jugador.setScale(3);
         this.jugador.setAlpha(1);
 
-        this.jugador.setData('posIni', [posIniX, posIniY]);
-        this.jugador.setData('vel-x', Jugador.VEL_X);
-        this.jugador.setData('acel-x', Jugador.ACEL_X);
-        this.jugador.setData('vel-y', Jugador.VEL_Y);
+        this.jugador.setData('posIni', [Settings.jugador.posIniX, Settings.jugador.posIniY]);
+        this.jugador.setData('vel-x', Settings.jugador.velX);
+        this.jugador.setData('acel-x', Settings.jugador.acelX);
+        this.jugador.setData('vel-y', Settings.jugador.velY);
         this.jugador.setCollideWorldBounds(true);
         this.jugador.setBounce(0.2);
 
@@ -33,21 +27,21 @@ export class Jugador
         // this.joystickCursors = this.relatedScene.joyStick.createCursorKeys();
 
         console.log(this.controles);
-        console.log(this.jugador, this.jugador.x, this.jugador.body.width, this.jugador.width);
+        // console.log(this.jugador, this.jugador.x, this.jugador.body.width, this.jugador.width);
     }
 
     update()
     {
-
-        if (this.controles.left.isDown || this.relatedScene.crucetaleft.isDown) {
-
+        if (this.controles.left.isDown || this.relatedScene.crucetaleft.isDown)
+        {
             this.jugador.setVelocityX(-this.jugador.getData('vel-x'));
             
-        } else if (this.controles.right.isDown  || this.relatedScene.crucetaright.isDown) {
-
+        } else if (this.controles.right.isDown  || this.relatedScene.crucetaright.isDown)
+        {
             this.jugador.setVelocityX(this.jugador.getData('vel-x'));
         
-        } else {
+        } else
+        {
             this.jugador.setVelocityX(0);
         }
     }
@@ -62,7 +56,7 @@ export class Jugador
 export class JugadorShowVidas
 {
     static xAbsolute = 240;
-    static ancho = 19; // 124
+    static ancho = 32; // 124
     static alto = 28; // 183
 
     constructor(scene)
@@ -78,8 +72,9 @@ export class JugadorShowVidas
             repeat: Settings.getVidas() - 1
         });
 
-        this.jugadorSV.children.iterate(vida => {
-            vida.setScale(0.15, 0.15);
+        this.jugadorSV.children.iterate(vida =>
+        {
+            vida.setScale(1);
             vida.setAlpha(0.9);
         });
 

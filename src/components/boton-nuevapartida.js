@@ -57,32 +57,31 @@ export class BotonNuevaPartida
 // ==================================================================================
 export class BotonFullScreen
 {
-  constructor(scene, direccion)
+  constructor(scene, args)
   {
     this.relatedScene = scene;
-    this.direccion = direccion;
+    this.args = args;
   }
 
   create()
   {
-    const ancho = this.relatedScene.sys.game.config.width;
-    const alto = this.relatedScene.sys.game.config.height;
+    const {x, y, id, scX, scY, ang} = this.args;
 
-    this.boton = this.relatedScene.add.image(this.direccion.x, this.direccion.y, this.direccion.id).setInteractive();
-    this.boton.setScale(this.direccion.scX, this.direccion.scY);
-    this.boton.setAngle(this.direccion.ang).setFrame(0).setDepth(50);
-    this.boton.setX(this.direccion.x).setY(this.direccion.y);
+    this.boton = this.relatedScene.add.image(x, y, id).setInteractive();
+    this.boton.setScale(scX, scY);
+    this.boton.setAngle(ang).setFrame(0).setDepth(50);
+    this.boton.setX(x).setY(y + Math.floor(this.boton.height / 2));
 
     this.boton.on('pointerover', () =>
     {
       // this.boton.setFrame(1);
-      this.boton.setScale(this.direccion.scX + 0.1, this.direccion.scY + 0.1);
+      this.boton.setScale(scX + 0.1, scY + 0.1);
     });
     
     this.boton.on('pointerout', () =>
     {
       // this.boton.setFrame(0);
-      this.boton.setScale(this.direccion.scX, this.direccion.scY);
+      this.boton.setScale(scX, scY);
     });
 
     this.boton.on('pointerdown', () =>
