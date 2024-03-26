@@ -2,8 +2,8 @@
 export class Settings
 {
     static controlElegido = {
-        mobile: true,
-        teclado: false
+        mobile: false,
+        teclado: true
     };
 
     static screen = {
@@ -22,7 +22,7 @@ export class Settings
     static jugador =
     {
         posIniX: Math.floor(Settings.screen.width / 2),
-        posIniY: Math.floor(Settings.screen.height / 1.08),
+        posIniY: Math.floor(Settings.screen.height / 1.05),
         velX: 520,
         acelX: 500,
         velY: 0
@@ -30,8 +30,14 @@ export class Settings
 
     static disparo =
     {
-        NRO_MAX_DISPAROS: 2,
+        NRO_MAX_DISPAROS: 3,
         VelY: -500
+    }
+
+    static disparoEnemigo =
+    {
+        NRO_MAX_DISPAROS: 9,
+        velY: 100
     }
 
     static incGodownInvaders =
@@ -43,7 +49,10 @@ export class Settings
     {
         rojo: 0xff2211,
         verde: 0x11ff11,
-        amarillo: 0xeeff00
+        amarillo: 0xeeff00,
+        disparo: {
+            naranja: 0xcc9911
+        }
     };
 
     static explosionInvaders = null;

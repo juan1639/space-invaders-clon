@@ -1,5 +1,4 @@
 import { Settings } from "../scenes/settings.js";
-// import { centrar_txt } from "../functions/functions.js";
 
 export class Marcador
 {
@@ -16,9 +15,9 @@ export class Marcador
         const alto = this.relatedScene.sys.game.config.height;
 
         this.args = [
-            [ ' Score: ', 20, '#fff', '#2ef', 7, 0, 0, Settings.getPuntos() ],
-            [ ' Level: ', 20, '#fff', '#2ef', 7, Math.floor(ancho / 2), 0, Settings.getNivel() ],
-            [ ' Record: ', 20, '#fff', '#2ef', 7, Math.floor(ancho / 1.4), 0, Settings.getRecord() ]
+            [ ' Score: ', 24, '#fff', '#2ef', 7, 0, 0, Settings.getPuntos() ],
+            [ ' Level: ', 24, '#ff7', '#2ef', 7, Math.floor(ancho / 2.2), 0, Settings.getNivel() ],
+            [ ' Hi: ', 24, '#fff', '#2ef', 7, Math.floor(ancho / 1.5), 0, Settings.getRecord() ]
         ];
 
         this.args.forEach((arg, index) =>
@@ -35,8 +34,6 @@ export class Marcador
                     fill: true
                 }
             });
-
-            if (index === 1) cadaMarcador.setX(centrar_txt(cadaMarcador, ancho));
 
             this.marcadores.add(cadaMarcador);
         });

@@ -8,10 +8,11 @@ import { Scene } from 'phaser';
 import { Settings } from './settings.js';
 
 import {
+    inicia_disparo,
+    inicia_disparo_enemigos,
     colisionJugadorVsEnemigo,
     excepcionJugadorVsEnemigo,
     colisionDisparoVsEnemigo,
-    inicia_disparo,
     play_sonidos
 } from '../functions/functions.js';
 
@@ -99,10 +100,8 @@ export class Game extends Scene
         this.jugador.create();
         this.disparo.create();
         this.enemigo.create();
-        // this.disparoenemigo.create();
-        // this.explosion.create();
-        // this.particulas.create();
-        // this.marcador.create();
+        this.disparoenemigo.create();
+        this.marcador.create();
 
         this.set_colliders();
     }
@@ -112,15 +111,20 @@ export class Game extends Scene
         this.jugador.update();
         this.disparo.update();
         this.enemigo.update();
+        this.disparoenemigo.update();
 
         if (this.jugador.get().active && this.jugador.get().visible)
         {
             inicia_disparo(this.jugador, this.scene, this.botonfire, this.time, this.disparo, this.sonidoDisparo);
         }
         
-        // inicia_disparo_enemigos(this);
+        inicia_disparo_enemigos(this);
         
-        if (this.enemigo.get().countActive() <= 0) Settings.setNivelSuperado(true);
+        if (this.enemigo.get().countActive() <= 0)
+        {
+            Settings.setNivelSuperado(true);
+            // console.log('nivel superado');
+        }
     }
 
     set_sonidos()

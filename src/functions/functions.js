@@ -30,6 +30,70 @@ function inicia_disparo(jugador, scene, botonfire, time, disparo, sonidoDisparo)
   }
 }
 
+function inicia_disparo_enemigos(scene)
+{
+  let buscar = false;
+
+  scene.enemigo.get().children.iterate(ene =>
+  {
+    if (ene.x < scene.jugador.get().x + scene.jugador.get().width && ene.x + ene.width > scene.jugador.get().x && ene.body.enable)
+    {
+      scene.disparoenemigo.get().getChildren().forEach(disp =>
+      {
+        // console.log(disp.active);
+
+        if (!disp.active && !disp.visible && !buscar && scene.time.now > scene.disparoenemigo.cadencia.bandera)
+        {
+          buscar = true;
+          settings_disparo_enemigo(disp, ene);
+          enemigo_gira(ene, scene);
+          scene.disparoenemigo.cadencia.bandera = scene.time.now + scene.disparoenemigo.cadencia.disparo;
+          play_sonidos(scene.sonidoDisparoEnemigo, false, 0.9);
+          // scene.sonidoDieT2.play();
+        }
+      });
+
+    } else if (ene.body.enable)
+    {
+      scene.disparoenemigo.get().getChildren().forEach(disp =>
+      {
+        if (Phaser.Math.Between(0, 999) < Settings.getNivel() * 9 && scene.time.now > scene.disparoenemigo.cadencia.bandera)
+        {
+          buscar = true;
+          settings_disparo_enemigo(disp, ene);
+          enemigo_gira(ene, scene);
+          scene.disparoenemigo.cadencia.bandera = scene.time.now + scene.disparoenemigo.cadencia.disparo;
+          play_sonidos(scene.sonidoDisparoEnemigo, false, 0.9);
+          // scene.sonidoDieT2.play();
+        }
+      });
+    }
+  });
+}
+
+function settings_disparo_enemigo(disp, ene)
+{
+  disp.setActive(true).setVisible(true);
+  disp.enableBody(true, ene.x, ene.y + Math.floor(ene.body.height / 2), true, true);
+  // disp.setX(ene.x);
+  // disp.setY(ene.y + Math.floor(ene.body.height / 2));
+  disp.setVelocityY(Settings.disparoEnemigo.velY + Settings.getNivel() * 50);
+  // disp.setAngle(90);
+  disp.setScale(1, 2).setAlpha(1).setDepth(Settings.depth.disparoEnemigo);
+  disp.setTint(Settings.coloresInvaders.disparo.naranja);
+}
+
+function enemigo_gira(ene, scene)
+{
+  scene.tweens.add(
+  {
+    targets: ene,
+    angle: 360,
+    duration: 300,
+    yoyo: true,
+  });
+}
+
 function colisionJugadorVsEnemigo(enemigo, jugador)
 {
   console.log('colision...jugador-enemigo');
@@ -78,7 +142,7 @@ function colisionJugadorVsEnemigo(enemigo, jugador)
   // if (Settings.getVidas() >= 0) this.jugadorSV.get().getChildren()[Settings.getVidas()].setVisible(false);
   
   suma_puntos(jugador);
-  // this.marcador.update(0, Settings.getPuntos());
+  this.marcador.update(0, Settings.getPuntos());
   
   jugador.setActive(false).setVisible(false).disableBody(true, true);
   enemigo.setActive(false).setVisible(false).disableBody(true, true);
@@ -109,7 +173,7 @@ function colisionDisparoVsEnemigo(disparo, enemigo)
   );
 
   suma_puntos(disparo);
-  // this.marcador.update(0, Settings.getPuntos());
+  this.marcador.update(0, Settings.getPuntos());
   
   enemigo.setActive(false).setVisible(false).setX(-9999)
   disparo.setActive(false).setVisible(false).disableBody(true, true);
@@ -168,9 +232,10 @@ function play_sonidos(id, loop, volumen)
 }
 
 export {
+  inicia_disparo,
+  inicia_disparo_enemigos,
   colisionJugadorVsEnemigo,
   excepcionJugadorVsEnemigo,
   colisionDisparoVsEnemigo,
-  inicia_disparo,
   play_sonidos
 };
