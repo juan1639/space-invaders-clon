@@ -249,7 +249,7 @@ function colisionDisparoVsNodriza(disparo, nodriza)
     {min: 120, max: 250},
     {min: Settings.pausas.duracionExplosion.enemigo, max: Settings.pausas.duracionExplosion.enemigo + 500},
     {start: 0.9, end: 0},
-    new Phaser.Display.Color(Phaser.Math.Between(180, 255), Phaser.Math.Between(0, 50), 0).color,
+    new Phaser.Display.Color(Phaser.Math.Between(200, 255), Phaser.Math.Between(50, 255), 0).color,
     null, false, this
   );
 

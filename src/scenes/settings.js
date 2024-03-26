@@ -70,6 +70,14 @@ export class Settings
         velX: 150
     };
 
+    static defensas =
+    [
+        [Math.floor(Settings.screen.width / 8), Math.floor(Settings.screen.height / 1.2), 20, 7, 4, 4],
+        [Math.floor(Settings.screen.width / 2.7), Math.floor(Settings.screen.height / 1.2), 20, 7, 4, 4],
+        [Math.floor(Settings.screen.width / 1.7), Math.floor(Settings.screen.height / 1.2), 20, 7, 4, 4],
+        [Math.floor(Settings.screen.width / 1.2), Math.floor(Settings.screen.height / 1.2), 20, 7, 4 ,4]
+    ];
+
     static pausas =
     {
         revivir: 4000,

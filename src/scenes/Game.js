@@ -30,6 +30,7 @@ import { Textos } from '../components/textos.js';
 import { BotonFullScreen } from '../components/boton-nuevapartida.js';
 import { BotonFire, CrucetaDireccion } from '../components/botonfire.js';
 import { NaveNodriza } from '../components/nodriza.js';
+import { Defensas } from '../components/defensas.js';
 
 export class Game extends Scene
 {
@@ -62,6 +63,7 @@ export class Game extends Scene
 
         this.disparoenemigo = new DisparoEnemigo(this);
         this.nodriza = new NaveNodriza(this, false);
+        this.defensas = new Defensas(this);
         this.explosion = new Explosion(this);
         this.particulas = new Particulas(this);
         this.marcador = new Marcador(this);
@@ -108,6 +110,7 @@ export class Game extends Scene
         this.disparo.create();
         this.enemigo.create();
         this.disparoenemigo.create();
+        this.defensas.create();
         this.marcador.create();
 
         this.add.timeline([
