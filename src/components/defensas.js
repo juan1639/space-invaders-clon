@@ -31,7 +31,7 @@ export class Defensas
 
         this.defensas.children.iterate((defen, index) =>
         {
-            defen.setScale(1).setDepth(Settings.depth.enemigo);
+            defen.setScale(2).setDepth(Settings.depth.enemigo);
         });
 
         console.log(this.defensas);

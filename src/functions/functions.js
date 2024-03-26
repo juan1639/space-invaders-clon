@@ -260,6 +260,40 @@ function colisionDisparoVsNodriza(disparo, nodriza)
   disparo.setActive(false).setVisible(false).disableBody(true, true);
 }
 
+function colisionDisparoEnemigoVsDefensas(disparoEnemigo, defensa)
+{
+  console.log('colision disparoEnemigo-defensas');
+
+  particulas(
+    defensa.x, defensa.y, 'particula-tint',
+    {min: 100, max: 160},
+    {min: Settings.pausas.duracionExplosion.enemigo, max: Settings.pausas.duracionExplosion.enemigo + 500},
+    {start: 0.5, end: 0},
+    new Phaser.Display.Color(Phaser.Math.Between(170, 180), Phaser.Math.Between(155 ,195), 73).color,
+    null, false, this
+  );
+
+  defensa.setActive(false).setVisible(false).setX(-8888)
+  disparoEnemigo.setActive(false).setVisible(false).disableBody(true, true);
+}
+
+function colisionDisparoVsDefensas(disparo, defensa)
+{
+  console.log('colision disparo-defensas');
+
+  particulas(
+    defensa.x, defensa.y, 'particula-tint',
+    {min: 100, max: 160},
+    {min: Settings.pausas.duracionExplosion.enemigo, max: Settings.pausas.duracionExplosion.enemigo + 500},
+    {start: 0.5, end: 0},
+    new Phaser.Display.Color(Phaser.Math.Between(170, 180), Phaser.Math.Between(155 ,195), 73).color,
+    null, false, this
+  );
+
+  defensa.setActive(false).setVisible(false).setX(-8888)
+  disparo.setActive(false).setVisible(false).disableBody(true, true);
+}
+
 function particulas(x, y, particula, vel, span, size, color, sprite, bool, scene)
 {
     const partis = scene.add.particles(x, y, particula, {
@@ -343,5 +377,7 @@ export {
   colisionDisparoEnemigoVsJugador,
   excepcionDisparoEnemigoVsJugador,
   colisionDisparoVsNodriza,
+  colisionDisparoEnemigoVsDefensas,
+  colisionDisparoVsDefensas,
   play_sonidos
 };

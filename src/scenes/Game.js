@@ -16,6 +16,8 @@ import {
     colisionDisparoEnemigoVsJugador,
     excepcionDisparoEnemigoVsJugador,
     colisionDisparoVsNodriza,
+    colisionDisparoEnemigoVsDefensas,
+    colisionDisparoVsDefensas,
     play_sonidos
 } from '../functions/functions.js';
 
@@ -296,5 +298,11 @@ export class Game extends Scene
         // Collider disparoEnemigo vs jugador
         this.physics.add.overlap(this.disparoenemigo.get(), this.jugador.get(),
         colisionDisparoEnemigoVsJugador, excepcionDisparoEnemigoVsJugador, this);
+
+        // Collider disparoEnemigo vs defensas
+        this.physics.add.overlap(this.disparoenemigo.get(), this.defensas.get(), colisionDisparoEnemigoVsDefensas, null, this);
+
+        // Collider disparo vs defensas
+        this.physics.add.overlap(this.disparo.get(), this.defensas.get(), colisionDisparoVsDefensas, null, this);
     }
 }
