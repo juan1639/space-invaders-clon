@@ -48,6 +48,13 @@ export class MainMenu extends Scene
             duration: 59000
         });
 
+        const basedOn = this.add.text(
+            Math.floor(this.sys.game.config.width / 4),
+            Math.floor(this.sys.game.config.height / 1.04),
+            'Based on classic arcade game Space Invaders of 1978',
+            {fontSize: '16px', color: '#ff1', align: 'justify', fontFamily: 'Arial'}
+        );
+
         this.add.timeline([
             {
                 at: aparecerBoton,

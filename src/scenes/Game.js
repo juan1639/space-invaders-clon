@@ -145,10 +145,36 @@ export class Game extends Scene
 
     check_levelUp()
     {
-        if (this.enemigo.get().countActive() <= 0)
+        if (this.enemigo.get().countActive() <= 0 && !Settings.isNivelSuperado())
         {
             Settings.setNivelSuperado(true);
-            // console.log('nivel superado');
+
+            this.txtNivelSuperado = new Textos(this, {
+                x: Math.floor(this.sys.game.config.width / 2),
+                y: Math.floor(this.sys.game.config.height / 3.5),
+                txt: ' Congratulations! ',
+                size: 70, color: '#ffa', style: 'bold',
+                stroke: '#1d2', sizeStroke: 16,
+                shadowOsx: 2, shadowOsy: 2, shadowColor: '#111111',
+                bool1: false, bool2: true, origin: [0.5, 0.5],
+                elastic: false, dura: 0
+            });
+            
+            this.txtNivelSuperado.create();
+            this.txtNivelSuperado.get().setDepth(Settings.depth.textos).setAlpha(1);
+
+            this.tweens.add({
+                targets: this.txtNivelSuperado.get(),
+                alpha: 0,
+                duration: 2800
+            });
+
+            this.add.timeline([
+                {
+                    at: 4000,
+                    run: () => this.scene.start('Congratulations')
+                }
+            ]).play();
         }
     }
 
@@ -192,7 +218,7 @@ export class Game extends Scene
                     run: () => play_sonidos(this.sonidoGameOverRetro, false, 0.9)
                 },
                 {
-                    at: 5000,
+                    at: 7000,
                     run: () => this.scene.start('PreGame')
                 }
             ]).play();
@@ -201,7 +227,7 @@ export class Game extends Scene
 
     check_newRecord()
     {
-        if (Settings.getPuntos() <= Settings.getRecord()) {
+        if (Settings.getPuntos() >= Settings.getRecord()) {
 
             Settings.setRecord(Settings.getPuntos());
 
@@ -241,6 +267,7 @@ export class Game extends Scene
         this.sonidoExplosion = this.sound.add('explosion');
         this.sonidoNaveExplota = this.sound.add('nave-explota');
         this.sonidoGameOverRetro = this.sound.add('gameover-retro');
+        this.sonidoBonusNodriza = this.sound.add('bonus-nodriza');
     }
 
     hideMobileControls()

@@ -240,7 +240,7 @@ function colisionDisparoVsNodriza(disparo, nodriza)
   console.log('colision...disparo-nodriza');
   console.log(disparo);
 
-  play_sonidos(this.sonidoAliensHere, false, 0.9);
+  play_sonidos(this.sonidoBonusNodriza, false, 0.9);
   // draw_explosionTimeout(this, disparo);
   showBonus(this, disparo);
 

@@ -16,7 +16,7 @@ export class Settings
 
     static puntos = 0;
     static nivel = 1;
-    static hi = 48000;
+    static hi = 115400;
     static vidas = 3;
 
     static jugador =
@@ -36,8 +36,10 @@ export class Settings
 
     static disparoEnemigo =
     {
-        NRO_MAX_DISPAROS: 9,
-        velY: 100
+        NRO_MAX_DISPAROS: 19,
+        velY: 100,
+        MIN_INTENSIDAD: 740,
+        MAX_INTENSIDAD: 200
     }
 
     static incGodownInvaders =

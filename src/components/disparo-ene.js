@@ -23,8 +23,7 @@ export class DisparoEnemigo
             // console.log(disp.body.width, disp.body.height);
         });
 
-        const intensidadDisparos = 2000 - Settings.getNivel() * 100;
-
+        const intensidadDisparos = this.get_intensidadDisparos();
         this.cadencia = {disparo: intensidadDisparos, bandera: 0};
 
         console.log(this.disparoenemigo);
@@ -36,6 +35,14 @@ export class DisparoEnemigo
         {
             if (disp.y > this.relatedScene.sys.game.config.height) disp.setActive(false).setVisible(false).disableBody(true, true);
         });
+    }
+
+    get_intensidadDisparos()
+    {
+        let progresivo = Settings.disparoEnemigo.MIN_INTENSIDAD - Settings.getNivel() * 40;
+
+        if (progresivo < Settings.disparoEnemigo.MAX_INTENSIDAD) return Settings.disparoEnemigo.MAX_INTENSIDAD;
+        return progresivo;
     }
     
     get()
