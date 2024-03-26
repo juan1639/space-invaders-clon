@@ -52,7 +52,7 @@ export class MainMenu extends Scene
             {
                 at: aparecerBoton,
                 run: () => {
-                    this.botoninicio.create('Game', false);
+                    this.botoninicio.create('PreGame', false);
                 }
             }
         ]).play();

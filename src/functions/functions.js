@@ -215,6 +215,16 @@ function colisionDisparoEnemigoVsJugador(disparoEnemigo, jugador)
     }, Settings.pausas.revivir);
   }
 
+  restar_vida();
+  if (Settings.getVidas() >= 0)
+  {
+    this.jugadorSV.get().getChildren()[Settings.getVidas()].setVisible(false);
+  }
+  else
+  {
+    Settings.setGameOver(true);
+  }
+
   jugador.setActive(false).setVisible(false).setX(-8888)
   disparoEnemigo.setActive(false).setVisible(false).disableBody(true, true);
 }
@@ -230,7 +240,7 @@ function colisionDisparoVsNodriza(disparo, nodriza)
   console.log('colision...disparo-nodriza');
   console.log(disparo);
 
-  play_sonidos(this.sonidoExplosion, false, 0.9);
+  play_sonidos(this.sonidoAliensHere, false, 0.9);
   // draw_explosionTimeout(this, disparo);
   showBonus(this, disparo);
 
@@ -239,8 +249,6 @@ function colisionDisparoVsNodriza(disparo, nodriza)
     {min: 120, max: 250},
     {min: Settings.pausas.duracionExplosion.enemigo, max: Settings.pausas.duracionExplosion.enemigo + 500},
     {start: 0.9, end: 0},
-    // 0xffffff,
-    // new Phaser.Display.Color(255, Phaser.Math.Between(50, 240), 0).color,
     new Phaser.Display.Color(Phaser.Math.Between(180, 255), Phaser.Math.Between(0, 50), 0).color,
     null, false, this
   );
@@ -263,10 +271,7 @@ function particulas(x, y, particula, vel, span, size, color, sprite, bool, scene
         blendMode: 'ADD'
     });
 
-    scene.time.delayedCall(Settings.pausas.duracionExplosion.enemigo, () =>
-    {
-      partis.stop();
-    });
+    scene.time.delayedCall(Settings.pausas.duracionExplosion.enemigo, () => partis.stop());
 
     if (bool) partis.startFollow(sprite);
 }

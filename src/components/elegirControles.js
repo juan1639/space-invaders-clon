@@ -21,7 +21,7 @@ export class ElegirControles
       x: left + 60,
       y: top,
       txt: texto,
-      size: 45, color: '#ffa', style: 'bold',
+      size: 50, color: '#ffa', style: 'bold',
       stroke: '#1fb', sizeStroke: 16,
       shadowOsx: 2, shadowOsy: 2, shadowColor: '#111',
       bool1: false, bool2: true, origin: [0, 0.5],

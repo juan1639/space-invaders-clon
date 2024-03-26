@@ -26,6 +26,7 @@ import { DisparoEnemigo } from '../components/disparo-ene.js';
 import { Explosion } from '../components/explosion.js';
 import { Particulas } from '../components/particulas.js';
 import { Marcador } from './../components/marcador.js';
+import { Textos } from '../components/textos.js';
 import { BotonFullScreen } from '../components/boton-nuevapartida.js';
 import { BotonFire, CrucetaDireccion } from '../components/botonfire.js';
 import { NaveNodriza } from '../components/nodriza.js';
@@ -138,11 +139,61 @@ export class Game extends Scene
         }
         
         inicia_disparo_enemigos(this);
-        
+        this.check_levelUp();
+        this.check_gameOver();
+    }
+
+    check_levelUp()
+    {
         if (this.enemigo.get().countActive() <= 0)
         {
             Settings.setNivelSuperado(true);
             // console.log('nivel superado');
+        }
+    }
+
+    check_gameOver()
+    {
+        if (Settings.isGameOver())
+        {
+            Settings.setGameOver(false);
+
+            this.txtGameOver = new Textos(this, {
+                x: Math.floor(this.sys.game.config.width / 2),
+                y: Math.floor(this.sys.game.config.height / 1.6),
+                txt: ' Game Over ',
+                size: 80, color: '#ffa', style: 'bold',
+                stroke: '#1bc', sizeStroke: 16,
+                shadowOsx: 2, shadowOsy: 2, shadowColor: '#111',
+                bool1: false, bool2: true, origin: [0.5, 0.5],
+                elastic: false, dura: 0
+            });
+            
+            this.txtGameOver.create();
+            this.txtGameOver.get().setScale(1).setAlpha(0);
+
+            this.tweens.add({
+                targets: this.txtGameOver.get(),
+                alpha: 1,
+                duration: 3800,
+            });
+
+            play_sonidos(this.sonidoGameOverRetro, false, 0.9);
+
+            this.add.timeline([
+                {
+                    at: 2500,
+                    run: () => play_sonidos(this.sonidoGameOverRetro, false, 0.9)
+                },
+                {
+                    at: 3500,
+                    run: () => play_sonidos(this.sonidoGameOverRetro, false, 0.9)
+                },
+                {
+                    at: 5000,
+                    run: () => this.scene.start('PreGame')
+                }
+            ]).play();
         }
     }
 
@@ -154,6 +205,7 @@ export class Game extends Scene
         this.sonidoAliensHere = this.sound.add('aliens-here');
         this.sonidoExplosion = this.sound.add('explosion');
         this.sonidoNaveExplota = this.sound.add('nave-explota');
+        this.sonidoGameOverRetro = this.sound.add('gameover-retro');
     }
 
     hideMobileControls()
