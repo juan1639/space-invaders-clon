@@ -13,6 +13,9 @@ export class Preloader extends Scene
         const widthScreen = this.sys.game.config.width;
         const heightScreen = this.sys.game.config.height;
 
+        this.load.image('fondo', 'assets/img/fondo-nebulosa-800x600.png');
+        this.add.image(0, 0, 'fondo').setOrigin(0, 0);
+
         this.txt = new Textos(this, {
             x: Math.floor(widthScreen / 2),
             y: Math.floor(heightScreen / 3.5),
@@ -42,9 +45,6 @@ export class Preloader extends Scene
         this.load.on('progress', (progress) => {
             bar.width = (Math.floor(widthScreen / 1.52) * progress);
         });
-
-        this.load.image('fondo', 'assets/img/fondo-nebulosa-800x600.png');
-        this.add.image(0, 0, 'fondo').setOrigin(0, 0);
     } 
     
     preload()
