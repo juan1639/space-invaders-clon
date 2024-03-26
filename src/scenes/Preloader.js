@@ -85,6 +85,8 @@ export class Preloader extends Scene
         this.load.audio('disparo-enemigo', './disparo-enemigo.mp3');
         this.load.audio('aliens-atmos', './alien-atmos-dark.mp3');
         this.load.audio('aliens-here', './invaders-are-here.mp3');
+        this.load.audio('explosion', './explosion.wav');
+        this.load.audio('nave-explota', './navexplota.mp3');
     }
 
     create()

@@ -13,6 +13,9 @@ import {
     colisionJugadorVsEnemigo,
     excepcionJugadorVsEnemigo,
     colisionDisparoVsEnemigo,
+    colisionDisparoEnemigoVsJugador,
+    excepcionDisparoEnemigoVsJugador,
+    colisionDisparoVsNodriza,
     play_sonidos
 } from '../functions/functions.js';
 
@@ -81,6 +84,7 @@ export class Game extends Scene
         this.add.image(0, 0, 'fondo').setOrigin(0, 0);
 
         this.set_sonidos();
+        play_sonidos(this.sonidoAliensHere, false, 0.9);
 
         this.botonfullscreen.create();
         this.botonfire.create();
@@ -111,6 +115,7 @@ export class Game extends Scene
                 run: () =>
                 {
                     this.nodriza.create();
+                    this.physics.add.collider(this.nodriza.get(), this.disparo.get(), colisionDisparoVsNodriza, null, this);
                 }
             }
         ]).play();
@@ -147,6 +152,8 @@ export class Game extends Scene
         this.sonidoDisparoEnemigo = this.sound.add('disparo-enemigo');
         this.sonidoAliensAtmos = this.sound.add('aliens-atmos');
         this.sonidoAliensHere = this.sound.add('aliens-here');
+        this.sonidoExplosion = this.sound.add('explosion');
+        this.sonidoNaveExplota = this.sound.add('nave-explota');
     }
 
     hideMobileControls()
@@ -169,16 +176,8 @@ export class Game extends Scene
         // Collider enemigo vs jugador
         this.physics.add.overlap(this.enemigo.get(), this.jugador.get(), colisionJugadorVsEnemigo, excepcionJugadorVsEnemigo, this);
 
-        /* this.physics.add.overlap(this.enemigo.get(), this.jugador.get(), colisionJugadorVsEnemigo,(enemigo, jugador) => {
-
-        if (enemigo.alpha < 1) return false;// Invisibilidad al revivir
-        return true;
-        }, this); */
-
-        /* this.physics.add.overlap(this.disparoenemigo.get(), this.jugador.get(), colisionVsDisparoEnemigo,(disparoenemigo, jugador) => {
-
-        if (disparoenemigo.alpha < 1) return false;// Invisibilidad al revivir
-        return true;
-        }, this); */
+        // Collider disparoEnemigo vs jugador
+        this.physics.add.overlap(this.disparoenemigo.get(), this.jugador.get(),
+        colisionDisparoEnemigoVsJugador, excepcionDisparoEnemigoVsJugador, this);
     }
 }

@@ -56,6 +56,7 @@ export class Settings
     };
 
     static explosionInvaders = null;
+    static showBonus = null;
 
     static nodriza =
     {
@@ -70,6 +71,7 @@ export class Settings
     {
         revivir: 4000,
         invisible: 3000,
+        showBonus: 3500,
         duracionExplosion: {
             jugador: 1000,
             enemigo: 400

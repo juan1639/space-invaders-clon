@@ -25,6 +25,7 @@ export class NaveNodriza
         this.nodriza = this.relatedScene.physics.add.sprite(x, Settings.nodriza.posIniY, 'nodriza-ssheet');
 
         this.nodriza.setScale(2).setVelocityX(this.velX);
+        this.nodriza.setData('puntos', 5000 * Settings.getNivel());
 
         this.relatedScene.anims.create(
         {
