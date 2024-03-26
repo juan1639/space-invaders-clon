@@ -158,6 +158,8 @@ export class Game extends Scene
         {
             Settings.setGameOver(false);
 
+            this.check_newRecord();
+
             this.txtGameOver = new Textos(this, {
                 x: Math.floor(this.sys.game.config.width / 2),
                 y: Math.floor(this.sys.game.config.height / 1.6),
@@ -194,6 +196,39 @@ export class Game extends Scene
                     run: () => this.scene.start('PreGame')
                 }
             ]).play();
+        }
+    }
+
+    check_newRecord()
+    {
+        if (Settings.getPuntos() <= Settings.getRecord()) {
+
+            Settings.setRecord(Settings.getPuntos());
+
+            this.txtnewrecord = new Textos(this, {
+                x: Math.floor(this.sys.game.config.width / 2),
+                y: Math.floor(this.sys.game.config.height / 3),
+                txt: ' Enhorabuena! \n Nuevo Record! ',
+                size: 50, color: '#ff9', style: 'bold',
+                stroke: '#5f1', sizeStroke: 16,
+                shadowOsx: 2, shadowOsy: 2, shadowColor: '#111111',
+                bool1: false, bool2: true, origin: [0.5, 0.5],
+                elastic: false, dura: 0
+            });
+        
+            this.txtnewrecord.create();
+            this.txtnewrecord.get().setDepth(Settings.depth.marcadores);
+
+            this.tweens.add({
+                targets: this.txtnewrecord.get(),
+                scale: 2.1,
+                ease: 'sine.out',
+                duration: 1000,
+                yoyo: true,
+                delay: 500,
+                repeat: -1,
+                repeatDelay: 3000
+            });
         }
     }
 

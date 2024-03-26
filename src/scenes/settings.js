@@ -48,7 +48,8 @@ export class Settings
     static coloresInvaders =
     {
         rojo: 0xff2211,
-        verde: 0x11ff11,
+        // verde: 0x11ff11,
+        verde: 0x11bbcc,
         amarillo: 0xeeff00,
         disparo: {
             naranja: 0xcc9911
