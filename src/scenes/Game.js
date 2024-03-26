@@ -25,6 +25,7 @@ import { Particulas } from '../components/particulas.js';
 import { Marcador } from './../components/marcador.js';
 import { BotonFullScreen } from '../components/boton-nuevapartida.js';
 import { BotonFire, CrucetaDireccion } from '../components/botonfire.js';
+import { NaveNodriza } from '../components/nodriza.js';
 
 export class Game extends Scene
 {
@@ -56,6 +57,7 @@ export class Game extends Scene
         });
 
         this.disparoenemigo = new DisparoEnemigo(this);
+        this.nodriza = new NaveNodriza(this, false);
         this.explosion = new Explosion(this);
         this.particulas = new Particulas(this);
         this.marcador = new Marcador(this);
@@ -103,6 +105,16 @@ export class Game extends Scene
         this.disparoenemigo.create();
         this.marcador.create();
 
+        this.add.timeline([
+            {
+                at: Settings.nodriza.aparecer,
+                run: () =>
+                {
+                    this.nodriza.create();
+                }
+            }
+        ]).play();
+
         this.set_colliders();
     }
 
@@ -113,6 +125,8 @@ export class Game extends Scene
         this.enemigo.update();
         this.disparoenemigo.update();
 
+        if (this.nodriza.activa) this.nodriza.update();
+                
         if (this.jugador.get().active && this.jugador.get().visible)
         {
             inicia_disparo(this.jugador, this.scene, this.botonfire, this.time, this.disparo, this.sonidoDisparo);

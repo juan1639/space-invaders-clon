@@ -16,7 +16,7 @@ export class Settings
 
     static puntos = 0;
     static nivel = 1;
-    static hi = 3000;
+    static hi = 48000;
     static vidas = 3;
 
     static jugador =
@@ -56,6 +56,15 @@ export class Settings
     };
 
     static explosionInvaders = null;
+
+    static nodriza =
+    {
+        aparecer: 15000,
+        posIniX: -100,
+        posIniY: 50,
+        posIniXRight: Settings.screen.width + 100,
+        velX: 150
+    };
 
     static pausas =
     {

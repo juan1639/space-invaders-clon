@@ -68,6 +68,7 @@ export class Preloader extends Scene
         this.load.image('explosion-obstaculo', './img/explode.png');
         this.load.image('particula-tint', './img/particula-tint.png');
         this.load.image('nodriza', './img/mothership.png');
+        this.load.spritesheet('nodriza-ssheet', './img/mothership-ssheet.png', {frameWidth: 48, frameHeight: 21});
         this.load.image('jugador', './img/ship.png');
 
         const widthInvader = [null, 16, 22, 24];
