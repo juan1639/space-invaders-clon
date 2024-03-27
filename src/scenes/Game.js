@@ -77,8 +77,8 @@ export class Game extends Scene
         });
 
         this.botonfire = new BotonFire(this);
-        this.crucetaleft = new CrucetaDireccion(this, { id: 'cruceta-left', x: 80, y: 60 });
-        this.crucetaright = new CrucetaDireccion(this, { id: 'cruceta-right', x: 290, y: 60 });
+        // this.crucetaleft = new CrucetaDireccion(this, { id: 'cruceta-left', x: 80, y: 60 });
+        // this.crucetaright = new CrucetaDireccion(this, { id: 'cruceta-right', x: 290, y: 60 });
         // var joyStick = scene.plugins.get('rexvirtualjoystickplugin').addPlayer(scene, config);
     }
 
@@ -93,20 +93,11 @@ export class Game extends Scene
 
         this.botonfullscreen.create();
         this.botonfire.create();
-        this.crucetaleft.create();
-        this.crucetaright.create();
+        // this.crucetaleft.create();
+        // this.crucetaright.create();
+        this.rexVirtualJoystick();
         this.hideMobileControls();
 
-        /* this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
-        x: 90,
-        y: this.sys.game.config.height - 90,
-        radius: 100,
-        // base: this.add.circle(0, 0, 50, 0x888888),
-        base: this.add.image(0, 0, 'base-joystick').setScale(2),
-        // thumb: this.add.circle(0, 0, 25, 0xcccccc),
-        thumb: this.add.image(0, 0, 'base-joystick').setScale(1)
-        }); */
-        
         this.jugadorSV.create();
         this.jugador.create();
         this.disparo.create();
@@ -138,7 +129,7 @@ export class Game extends Scene
 
         if (this.nodriza.activa) this.nodriza.update();
                 
-        if (this.jugador.get().active && this.jugador.get().visible)
+        if (this.jugador.get().active && this.jugador.get().visible && !this.enemigo.invisibleInvaders)
         {
             inicia_disparo(this.jugador, this.scene, this.botonfire, this.time, this.disparo, this.sonidoDisparo);
         }
@@ -275,6 +266,24 @@ export class Game extends Scene
         this.sonidoBonusNodriza = this.sound.add('bonus-nodriza');
     }
 
+    rexVirtualJoystick()
+    {
+        this.joyStick = this.plugins.get('rexvirtualjoystickplugin').add(this, {
+            x: 90,
+            y: this.sys.game.config.height - 90,
+            radius: 60,
+            base: this.add.circle(0, 0, 60, 0x888888, 0.4),
+            // base: this.add.image(0, 0, 'base-joystick').setScale(2),
+            thumb: this.add.circle(0, 0, 30, 0xcccccc, 0.7),
+            // thumb: this.add.image(0, 0, 'base-joystick').setScale(1)
+            dir: '4dir',
+            // forceMin: 16,
+            fixed: true,
+            enable: true
+        });
+        console.log(this.joyStick);
+    }
+
     hideMobileControls()
     {
         console.log(Settings.controlElegido);
@@ -282,8 +291,9 @@ export class Game extends Scene
         if (!Settings.controlElegido.mobile)
         {
         this.botonfire.get().setVisible(false);
-        this.crucetaleft.get().setVisible(false);
-        this.crucetaright.get().setVisible(false);
+        // this.crucetaleft.get().setVisible(false);
+        // this.crucetaright.get().setVisible(false);
+        this.joyStick.setVisible(false);
         }
     }
 

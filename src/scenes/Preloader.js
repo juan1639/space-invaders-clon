@@ -81,6 +81,10 @@ export class Preloader extends Scene
             });
         }
 
+        // Pluggin VirtualJoystick
+        let url = 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexvirtualjoystickplugin.min.js';
+        this.load.plugin('rexvirtualjoystickplugin', url, true);
+
         //  Archivos de audio
         this.load.audio('disparo-jugador', './disparo-corto.mp3');
         this.load.audio('disparo-enemigo', './disparo-enemigo.mp3');

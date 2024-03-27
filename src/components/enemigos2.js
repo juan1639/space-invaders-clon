@@ -1,4 +1,5 @@
 import { Settings } from '../scenes/settings.js';
+import { Textos } from './textos.js';
 
 export class Enemigo
 {
@@ -45,7 +46,7 @@ export class Enemigo
 
         this.enemigos.getChildren().forEach((ene, index) =>
         {
-            ene.setAngle(355).setScale(2).setDepth(Settings.depth.enemigo);
+            ene.setAlpha(0).setAngle(355).setScale(0).setDepth(Settings.depth.enemigo);
             ene.setData('puntos', 400 - index * 5);
         });
 
@@ -57,27 +58,33 @@ export class Enemigo
             repeat: -1
         });
 
+        this.invisibleTime = 4800;
+        this.invisibleInvaders = true;
+
+        this.relatedScene.tweens.add({
+            targets: this.enemigos.getChildren(), alpha: 1, scale: 2, duration: this.invisibleTime,
+        });
+
         this.crea_anims(Settings.getNivel());
 
-        /* const timeline = this.relatedScene.add.timeline([
+        const timeline = this.relatedScene.add.timeline([
             {
-                at: 30000,
-                run: () => {
-                    this.enemigos.children.iterate(ene => {
-
-                        ene.setVelocityY(Enemigo.VEL_Y);
-                    });
-                }
+                at: this.invisibleTime,
+                run: () => this.invisibleInvaders = false
             }
         ]);
 
-        timeline.play(); */
+        timeline.play();
+
+        this.txtReady();
 
         console.log(this.enemigos.getChildren());
     }
 
     update()
     {
+        if (this.invisibleInvaders) return;
+
         this.formacion.x += this.formacion.velX;
 
         if (
@@ -138,6 +145,25 @@ export class Enemigo
         const x = index - (y * Enemigo.array_enemigos[0].length);
         
         return [x, y];
+    }
+
+    txtReady()
+    {
+        this.txt = new Textos(this.relatedScene, {
+            x: Math.floor(this.relatedScene.sys.game.config.width / 2),
+            y: Math.floor(this.relatedScene.sys.game.config.height / 1.7),
+            txt: ' Ready... ',
+            size: 40, color: '#ffa', style: 'bold',
+            stroke: '#9dc', sizeStroke: 8,
+            shadowOsx: 2, shadowOsy: 2, shadowColor: '#111',
+            bool1: false, bool2: true, origin: [0.5, 0.5],
+            elastic: Math.floor(this.relatedScene.sys.game.config.height / 1.4), dura: this.invisibleTime - 1000
+        });
+
+        this.txt.create();
+        this.relatedScene.tweens.add({
+            targets: this.txt.get(), alpha: 0, ease: 'Sine.easeOut', duration: this.invisibleTime
+        });
     }
 
     get()

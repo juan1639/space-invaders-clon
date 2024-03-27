@@ -24,7 +24,7 @@ export class Jugador
         this.jugador.setBounce(0.2);
 
         this.controles = this.relatedScene.input.keyboard.createCursorKeys();
-        // this.joystickCursors = this.relatedScene.joyStick.createCursorKeys();
+        this.joystickCursors = this.relatedScene.joyStick.createCursorKeys();
 
         console.log(this.controles);
         // console.log(this.jugador, this.jugador.x, this.jugador.body.width, this.jugador.width);
@@ -32,11 +32,13 @@ export class Jugador
 
     update()
     {
-        if (this.controles.left.isDown || this.relatedScene.crucetaleft.isDown)
+        if (this.relatedScene.enemigo.invisibleInvaders) return;
+        
+        if (this.controles.left.isDown || this.joystickCursors.left.isDown)
         {
             this.jugador.setVelocityX(-this.jugador.getData('vel-x'));
             
-        } else if (this.controles.right.isDown  || this.relatedScene.crucetaright.isDown)
+        } else if (this.controles.right.isDown  || this.joystickCursors.right.isDown)
         {
             this.jugador.setVelocityX(this.jugador.getData('vel-x'));
         

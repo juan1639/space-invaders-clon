@@ -33,6 +33,8 @@ function inicia_disparo(jugador, scene, botonfire, time, disparo, sonidoDisparo)
 
 function inicia_disparo_enemigos(scene)
 {
+  if (scene.enemigo.invisibleInvaders) return;
+  
   let buscar = false;
 
   scene.enemigo.get().children.iterate(ene =>
